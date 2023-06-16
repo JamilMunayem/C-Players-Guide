@@ -1,0 +1,82 @@
+Console.Write("What is your passcode?  ");
+int Code = Convert.ToInt32(Console.ReadLine());
+Door door = new Door(Code);
+
+while (true)
+{
+   Console.WriteLine($"The door is currently {door.State}");
+   Console.Write("What do you want to do? (open, close, lock, unlock, change code)  ");
+
+    string? input = Console.ReadLine();
+
+    switch (input)
+    {
+        case "open":
+            door.Open();
+            break;
+        case "close":
+            door.Close();
+            break;
+        case "lock":
+            door.Lock();
+            break;
+        case "unlock":
+            Console.Write("Enter passcode:  ");
+            int code = Convert.ToInt32(Console.ReadLine());
+            door.Unlock(code);
+            break;
+        case "change code":
+            Console.Write("Enter original passcode:  ");
+            int originalCode = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter new passcode:  ");
+            int newCode = Convert.ToInt32(Console.ReadLine());
+            bool success = door.Change(originalCode, newCode);
+            break;
+        default:
+            Console.WriteLine("Not a valid response");
+            break;
+    };
+}
+
+public class Door
+{
+    public DoorState State { get; private set; }
+    private int _currentCode;
+
+    public Door(int Code)
+    {
+        _currentCode = Code;
+        State = DoorState.Closed;
+    }
+    public void Open()
+    {
+        if (State == DoorState.Closed) State = DoorState.Open;
+    }
+
+    public void Close()
+    {
+        if (State == DoorState.Open) State = DoorState.Closed;
+    }
+
+    public void Lock()
+    {
+        if (State == DoorState.Closed) State = DoorState.Locked;
+    }
+
+    public void Unlock(int code)
+    {
+        if (code == _currentCode && State == DoorState.Locked) State = DoorState.Closed;
+    }
+
+    public bool Change(int orignalCode, int newCode)
+    {
+        if (orignalCode == _currentCode)
+        {
+            _currentCode = newCode;
+            Console.WriteLine("Succesful change!");
+            return true;
+        }
+        Console.WriteLine("Incorrect code");
+        return false;
+    }
+}
