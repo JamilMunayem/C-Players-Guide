@@ -83,6 +83,7 @@ public class Water : InventoryItem { public Water() : base(2, 3) { } }
 public class Food : InventoryItem { public Food() : base(1, 0.5f) { } }
 public class Sword : InventoryItem { public Sword() : base(5, 3) { } }
 
-
+// Question/Thoughts
+// 1. Had no idea you could set arrays as fields (thus making each array index a weapon class due to inheritence)
 // Notes
 // https://cat-bear-45b.notion.site/Inheritance-eac96dd11a4a4372b2b0cb25ca300d9d
