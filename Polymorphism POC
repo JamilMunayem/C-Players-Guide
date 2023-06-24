@@ -1,4 +1,40 @@
 //Problem Set - Robot class that can take coordinate commands/can be powered off or on
+
+Robot robot = new Robot();
+
+foreach (RobotCommand in Robot)
+{
+    string input = Console.ReadLine();
+    switch (input)
+    {
+        case "on":
+            robot.IsPowered = true;
+            break;
+
+        case "off":
+            robot.IsPowered = false;
+            break;
+
+        case "north":
+            robot.NorthCommand();
+            break;
+
+        case "south":
+            robot.SouthCommand();
+            break;
+
+        case "west":
+            robot.WestCommand();
+            break;
+
+        case "east":
+            robot.EastCommand();
+            break;
+    }
+    Run()
+}
+
+public class Robot
 {
     public int X { get; set; }
     public int Y { get; set; }
