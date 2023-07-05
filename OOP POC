@@ -1,0 +1,174 @@
+//Large OOP Project using classes, interfaces, polymorphism, generics and inheritence 
+// view on seperate browser https://cat-bear-45b.notion.site/Tarodev-Hero-Project-f3af015528524ae2b8d4707f44e15a2f?pvs=25
+
+//Main Method
+Console.WriteLine("Pick a hero: Warrior, Tank or Mage");
+string? hero = Console.ReadLine();
+if (hero == null)
+{
+    Console.WriteLine("Not a valid hero name");
+    return;
+}
+
+if (hero == "warrior" || hero == "Warrior")
+{
+    Warrior warrior = new Warrior();
+    Console.WriteLine("Pick a name for your hero?");
+    warrior.Name = Console.ReadLine();
+
+    Console.WriteLine("Would you like to attack or defend?");
+    string AttackOrDefend = Console.ReadLine();
+
+    if (AttackOrDefend == "attack")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(warrior);
+        helper.ForceHeroToAttack();
+    }
+
+    else if (AttackOrDefend == "defend")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(warrior);
+        helper.ForceHeroToDefend();
+    }
+}
+
+else if (hero == "tank" || hero == "Tank")
+{
+    Tank tank = new Tank();
+    Console.WriteLine("Pick a name for your hero?");
+    tank.Name = Console.ReadLine();
+
+    Console.WriteLine("Would you like to attack or defend?");
+    string AttackOrDefend = Console.ReadLine();
+
+    if (AttackOrDefend == "attack")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(tank);
+        helper.ForceHeroToDefend();
+    }
+
+    else if (AttackOrDefend == "defend")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(tank);
+        helper.ForceHeroToDefend();
+    }
+}
+
+else if (hero == "mage" || hero == "Mage")
+{
+    Mage mage = new Mage();
+    Console.WriteLine("Pick a name for your hero?");
+    mage.Name = Console.ReadLine();
+
+    Console.WriteLine("Would you like to attack or defend?");
+    string AttackOrDefend = Console.ReadLine();
+
+    if (AttackOrDefend == "attack")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(mage);
+        helper.ForceHeroToAttack();
+    }
+
+    else if (AttackOrDefend == "defend")
+    {
+        HeroHelper<IHero> helper = new HeroHelper<IHero>(mage);
+        helper.ForceHeroToAttack();
+    }
+}
+
+else
+{
+    Console.WriteLine("Not a valid hero option");
+    return;
+}
+
+//Class 
+
+//  Class HeroHelper that provides actions for the hero, using generics to act as a placeholder for the Heroclasses, T Data where T can be a Mage, Tank or Warrior as the generic is constrained to Hero. Using the Data I can perform Attack and Defend method specific to T/type of hero class
+
+public class HeroHelper<T> where T : IHero
+{
+    public T Data;
+    public HeroHelper(T data)
+    {
+        Data = data;
+    }
+    public void ForceHeroToAttack()
+    {
+        Data.Attack();
+    }
+
+    public void ForceHeroToDefend()
+    {
+        Data.Defend();
+    }
+}
+
+// Interface establishing base template for hero structure
+public interface IHero
+{
+    int Hp { get; set; }
+    int Dmg { get; set; }
+    int Def { get; set; }
+    string? Name { get; set; }
+    void Attack() { 
+    }
+    void Defend() { 
+    }
+}
+
+// Implementing interface into an abstract class to create a partial class with some set fields (such as HP) and create a polymorphic method
+public abstract class Hero : IHero
+{
+    public int Hp { get; set; } = 100;
+    public virtual int Dmg { get; set; }
+    public virtual int Def { get; set; }
+    public string? Name { get; set; }
+    public abstract void Attack();
+    public abstract void Defend();
+}
+
+// Inheriting hero to specific types of hero to specify fields and methods to each type of hero
+public class Warrior : Hero
+{
+    public override int Dmg { get; set; } = 100;
+    public override int Def { get; set; } = 20;
+    public string? Name { get; set; }
+    public override void Attack()
+    {
+        Console.WriteLine($"The Warrior {Name} has a Hp of {Hp} used his sword and did {Dmg} dmg");
+    }
+    public override void Defend()
+    {
+        Console.WriteLine($"The Warrior {Name} has a Hp of {Hp} used his sword to defend and saved {Def} Hp");
+    }
+}
+
+public class Tank : Hero
+{
+    public override int Dmg { get; set; } = 50;
+    public override int Def { get; set; } = 100;
+    public string? Name { get; set; }
+    public override void Attack()
+    {
+        Console.WriteLine($"The Tank {Name} has a Hp of {Hp} used his shield and did {Dmg} dmg");
+    }
+    public override void Defend()
+    {
+        Console.WriteLine($"The Tank {Name} has a Hp of {Hp} used his shield to defend and saved {Def} Hp");
+    }
+}
+public class Mage : Hero
+{
+    public override int Dmg { get; set; } = 80;
+    public override int Def { get; set; } = 50;
+    public string? Name { get; set; }
+    public override void Attack()
+    {
+        Console.WriteLine($"The Mage {Name} has a Hp of {Hp} used his magic and did {Dmg} dmg");
+    }
+    public override void Defend()
+    {
+        Console.WriteLine($"The Mage {Name} has a Hp of {Hp} used his magic to defend and saved {Def}  Hp");
+    }
+}
